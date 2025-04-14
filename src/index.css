@@ -1,28 +1,21 @@
 @import "tailwindcss";
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
-}
-
-body{
-    background-color: #000000;
-    color: #ffffff;
-    scroll-behavior: smooth;
-}
-
 :root {
-    --secondary_bg: #121212;
-    --tertiary_bg: #242424;
+  --secondary_bg: #121212;
+  --tertiary_bg: #242424;
 }
 
-.secondary_bg{
-    background: var(--secondary_bg);
+.secondary_bg {
+  background: var(--secondary_bg);
 }
 
-.tertiary_bg{
-    background: var(--tertiary_bg);
+.tertiary_bg {
+  background: var(--tertiary_bg);
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  scroll-behavior: smooth;
+  padding: 10px;
 }

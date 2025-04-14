@@ -2,9 +2,11 @@ import Sidebar from '../components/Sidebar/Sidebar'
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <div className='flex gap-2'>
       <Sidebar />
-      {children}
+      <div className='w-3/4 border border-s-white'>
+        {children}
+      </div>
     </div>
   )
 }
