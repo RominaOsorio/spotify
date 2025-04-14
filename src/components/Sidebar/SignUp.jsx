@@ -10,7 +10,7 @@ const SignUp = () => {
         </div>
 
         <button className='rounded-full text-black m-2 px-6 py-1 text-lg bg-white'>
-          Regístrate
+          Sign Up
         </button>
       </div>
     </>

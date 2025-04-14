@@ -3,6 +3,8 @@
 :root {
   --secondary_bg: #121212;
   --tertiary_bg: #242424;
+  --card_bg: #303030;
+  --card_sec_bg: #1212125e;
 }
 
 .secondary_bg {
@@ -18,4 +20,5 @@ body {
   color: #ffffff;
   scroll-behavior: smooth;
   padding: 10px;
+  font-family: "Poppins", sans-serif;
 }

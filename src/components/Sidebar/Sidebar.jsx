@@ -7,7 +7,7 @@ import './sidebar.css'
 
 const Sidebar = () => {
   return (
-    <div className='w-1/4 sidebar'>
+    <div className='w-1/4 fixed left-0 top-0 sidebar'>
       <div className='nav secondary_bg rounded-lg p-6'>
         <div className='flex items-center gap-4'>
           <BiSolidHome className='font-bold text-xl' />
