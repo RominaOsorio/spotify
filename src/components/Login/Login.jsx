@@ -18,7 +18,7 @@ const Login = () => {
 
       <div className='container py-10 max-w-none'>
         <div className='bg-black py-12 text-center w-1/2 mx-auto'>
-          <h1 className='text-5xl my-12 font-semibold'>Log In to Spotify</h1>
+          <h1 className='text-4xl my-12 font-semibold mx-4'>Inicia Sesión en Spotify</h1>
 
           <div className='border-b border-gray-400 my-4 w-3/4 mx-auto' />
 
