@@ -1,6 +1,7 @@
 import Layout from '../../Layout/Layout'
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go'
 import Card from '../Card/Card'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
@@ -12,12 +13,12 @@ const Home = () => {
         </div>
 
         <div>
-          <button className='rounded-full mt-4 px-8 py-2 text-base text-white'>
+          <Link to='signup' className='rounded-full mt-4 px-8 py-2 text-base text-white'>
             Sign Up
-          </button>
-          <button className='rounded-full mt-4 px-8 py-2 text-base text-black bg-white'>
+          </Link>
+          <Link to='/login' className='rounded-full mt-4 px-8 py-2 text-base text-black bg-white'>
             Log In
-          </button>
+          </Link>
         </div>
 
       </div>
