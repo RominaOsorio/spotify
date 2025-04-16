@@ -8,7 +8,7 @@ const Signup = () => {
       <div className='signup_container py-4'>
         <div className='logo'>
           <img
-            src='/src/assets/black_logo.svg'
+            src='/assets/logos/black_logo.svg'
             width={200}
             alt='Logo de Spotify'
             className='mx-auto transition-all duration-300 hover:scale-105'

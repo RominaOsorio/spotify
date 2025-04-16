@@ -7,7 +7,7 @@ const Login = () => {
       <header className=''>
         <div className='logo'>
           <img
-            src='/src/assets/green_logo.svg'
+            src='/assets/logos/green_logo.svg'
             width={150}
             alt='logo'
             className='transition-all duration-300 hover:scale-105'

@@ -2,6 +2,7 @@ import Layout from '../../Layout/Layout'
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go'
 import Card from '../Card/Card'
 import { Link } from 'react-router-dom'
+import { songs } from '../../data/songs'
 
 const Home = () => {
   return (
@@ -31,13 +32,11 @@ const Home = () => {
         </div>
 
         <div className='grid gap-6 grid-cols-5'>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+
+          {songs.map(song => {
+            return <Card key={song.id} song={song} />
+          })}
+
         </div>
 
         <div className='flex justify-between items-center mb-4 mt-8'>
