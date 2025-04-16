@@ -11,6 +11,11 @@ const Card = ({ song }) => {
   const handlePlay = (song) => {
     console.log(isPlaying)
 
+    if (isPlaying) {
+      masterSong.mp3.currentTime = 0
+      masterSong.mp3.pause()
+    }
+
     dispatch(playSong(song))
   }
 
