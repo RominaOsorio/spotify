@@ -3,6 +3,7 @@ import { GoChevronLeft, GoChevronRight } from 'react-icons/go'
 import Card from '../Card/Card'
 import { Link } from 'react-router-dom'
 import { songs } from '../../data/songs'
+import SongBar from '../MasterBar/SongBar'
 
 const Home = () => {
   return (
@@ -54,6 +55,7 @@ const Home = () => {
           <Card />
         </div>
       </div>
+      <SongBar />
 
     </Layout>
   )

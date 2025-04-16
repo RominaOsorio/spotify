@@ -67,7 +67,7 @@ const Sidebar = () => {
         </span>
       </button>
 
-      <SignUp />
+      {/* <SignUp /> */}
     </div>
   )
 }
