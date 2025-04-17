@@ -3,9 +3,11 @@ import './card.css'
 import { FaPlay, FaPause } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { playSong, pauseSong } from '../../states/Actors/SongActor'
+import { useGlobalContext } from '../../states/Context'
 
 const Card = ({ song }) => {
   const { masterSong, isPlaying } = useSelector(state => state.mainSong)
+  const { resetEverything } = useGlobalContext()
   const dispatch = useDispatch()
 
   const handlePlay = (song) => {
@@ -14,6 +16,7 @@ const Card = ({ song }) => {
     if (isPlaying) {
       masterSong.mp3.currentTime = 0
       masterSong.mp3.pause()
+      resetEverything()
     }
 
     dispatch(playSong(song))

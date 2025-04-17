@@ -9,9 +9,20 @@ import { PiMicrophoneStageDuotone, PiQueueLight } from 'react-icons/pi'
 import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2'
 import { BsSpeakerFill, BsArrowsAngleContract } from 'react-icons/bs'
 import { playMaster, pauseMaster } from '../../states/Actors/SongActor'
+import { useGlobalContext } from '../../states/Context'
 
 const SongBar = () => {
   const { masterSong, isPlaying } = useSelector(state => state.mainSong)
+  const {
+    progress,
+    setProgress,
+    resetEverything,
+    currTime,
+    setCurrTime,
+    duration,
+    setDuration
+  } = useGlobalContext()
+
   const dispatch = useDispatch()
 
   const handleMaster = () => {
@@ -22,19 +33,48 @@ const SongBar = () => {
     }
   }
 
+  const formatTime = (durationInSeconds = 0) => {
+    const minutes = Math.floor(durationInSeconds / 60)
+    const seconds = Math.round(durationInSeconds % 60)
+    return `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`
+  }
+
+  const changeProgress = (e) => {
+    const percent = e.target.value
+    const newTime = (percent / 100) * masterSong.mp3.duration
+    masterSong.mp3.currentTime = newTime
+    setProgress(percent)
+  }
+
   useEffect(() => {
-    if (masterSong) {
+    let interval
+
+    if (masterSong?.mp3) {
+      setDuration(formatTime(masterSong.mp3.duration))
+
       if (isPlaying) {
         masterSong.mp3.play()
-        masterSong?.mp3?.play()
+        interval = setInterval(() => {
+          const current = masterSong.mp3.currentTime
+          const dur = masterSong.mp3.duration
+
+          if (current >= dur) {
+            dispatch(pauseMaster())
+            resetEverything()
+          } else {
+            setProgress((current / dur) * 100)
+            setCurrTime(formatTime(current))
+          }
+        }, 1000)
       } else {
-        masterSong?.mp3?.pause()
+        masterSong.mp3.pause()
       }
     }
+
+    return () => clearInterval(interval)
   }, [masterSong, isPlaying])
 
   return (
-
     <div className='fixed w-full flex justify-between items-center bottom-0 left-0 h-20 bg-black'>
       <div className='w-2/12'>
         <div className='flex items-center gap-2'>
@@ -53,38 +93,31 @@ const SongBar = () => {
           <BiShuffle />
           <IoMdSkipBackward />
 
-          {
-                isPlaying
-                  ? (
-                    <button
-                      onClick={handleMaster}
-                      className='flex items-center rounded-[50%] bg-white justify-center p-2'
-                    >
-                      <FaPlay className='text-black' />
-                    </button>
-                    )
-                  : (
-                    <button
-                      onClick={handleMaster}
-                      className='flex items-center rounded-[50%] bg-white justify-center p-2'
-                    >
-                      <FaPause className='text-black' />
-                    </button>
-                    )
-            }
+          <button
+            onClick={handleMaster}
+            className='flex items-center rounded-[50%] bg-white justify-center p-2'
+          >
+            {isPlaying
+              ? <FaPause className='text-black' />
+              : <FaPlay className='text-black' />}
+          </button>
 
           <IoMdSkipForward />
           <BiRepeat />
         </div>
+
         <div className='flex items-center pb-3'>
-          <span className='text-xs'>00:00</span>
+          <span className='text-xs'>{currTime}</span>
           <input
             type='range'
             min={0}
             max={100}
+            value={progress}
+            onChange={changeProgress}
+            disabled={!masterSong?.mp3}
             className='w-full block'
           />
-          <span className='text-xs'>00:00</span>
+          <span className='text-xs'>{duration}</span>
         </div>
       </div>
 
@@ -103,9 +136,7 @@ const SongBar = () => {
         />
         <BsArrowsAngleContract className='text-2xl' />
       </div>
-
     </div>
-
   )
 }
 
