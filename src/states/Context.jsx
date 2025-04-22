@@ -6,6 +6,7 @@ export const AppProvider = ({ children }) => {
   const [currTime, setCurrTime] = useState('00:00')
   const [duration, setDuration] = useState('00:00')
   const [progress, setProgress] = useState(0)
+  const [songIdx, setSongIdx] = useState(0)
 
   const resetEverything = () => {
     setProgress(0)
@@ -14,7 +15,7 @@ export const AppProvider = ({ children }) => {
   }
 
   return (
-    <AppContext.Provider value={{ currTime, setCurrTime, duration, setDuration, progress, setProgress, resetEverything }}>
+    <AppContext.Provider value={{ currTime, setCurrTime, duration, setDuration, progress, setProgress, songIdx, setSongIdx, resetEverything }}>
       {children}
     </AppContext.Provider>
   )

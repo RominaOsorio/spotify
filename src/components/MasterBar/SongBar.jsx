@@ -8,9 +8,10 @@ import { FaPause, FaPlay } from 'react-icons/fa'
 import { PiMicrophoneStageDuotone, PiQueueLight } from 'react-icons/pi'
 import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2'
 import { BsSpeakerFill, BsArrowsAngleContract } from 'react-icons/bs'
-import { playMaster, pauseMaster } from '../../states/Actors/SongActor'
+import { playMaster, pauseMaster, playSong } from '../../states/Actors/SongActor'
 import { useGlobalContext } from '../../states/Context'
 import './songBar.css'
+import { songs } from '../../data/songs'
 
 const SongBar = () => {
   const { masterSong, isPlaying } = useSelector(state => state.mainSong)
@@ -21,7 +22,9 @@ const SongBar = () => {
     currTime,
     setCurrTime,
     duration,
-    setDuration
+    setDuration,
+    songIdx,
+    setSongIdx
   } = useGlobalContext()
   const [volume, setVolume] = useState(50)
 
@@ -51,6 +54,34 @@ const SongBar = () => {
   const changeVolume = (e) => {
     setVolume(e.target.value)
     masterSong.mp3.volume = e.target.value / 100
+  }
+
+  const backwardSong = () => {
+    if (masterSong.mp3) {
+      masterSong.mp3.pause()
+      masterSong.mp3.currentTime = 0
+    }
+
+    const prevIdx = songIdx - 1
+    if (prevIdx >= 0) {
+      resetEverything()
+      setSongIdx(prevIdx)
+      dispatch(playSong(songs[prevIdx]))
+    }
+  }
+
+  const forwardSong = () => {
+    if (masterSong.mp3) {
+      masterSong.mp3.pause()
+      masterSong.mp3.currentTime = 0
+    }
+
+    const nextIdx = songIdx + 1
+    if (nextIdx < songs.length) {
+      resetEverything()
+      setSongIdx(nextIdx)
+      dispatch(playSong(songs[nextIdx]))
+    }
   }
 
   useEffect(() => {
@@ -98,7 +129,7 @@ const SongBar = () => {
       <div className='w-5/12'>
         <div className='flex justify-center items-center mb-2 gap-6'>
           <BiShuffle />
-          <IoMdSkipBackward />
+          <IoMdSkipBackward onClick={backwardSong} />
 
           <button
             onClick={handleMaster}
@@ -109,7 +140,7 @@ const SongBar = () => {
               : <FaPlay className='text-black' />}
           </button>
 
-          <IoMdSkipForward />
+          <IoMdSkipForward onClick={forwardSong} />
           <BiRepeat />
         </div>
 

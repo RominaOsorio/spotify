@@ -5,14 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { playSong, pauseSong } from '../../states/Actors/SongActor'
 import { useGlobalContext } from '../../states/Context'
 
-const Card = ({ song }) => {
+const Card = ({ song, idx }) => {
   const { masterSong, isPlaying } = useSelector(state => state.mainSong)
-  const { resetEverything } = useGlobalContext()
+  const { resetEverything, setSongIdx } = useGlobalContext()
   const dispatch = useDispatch()
 
   const handlePlay = (song) => {
     console.log(isPlaying)
-
+    setSongIdx(idx)
+    console.log(idx)
     if (isPlaying) {
       masterSong.mp3.currentTime = 0
       masterSong.mp3.pause()

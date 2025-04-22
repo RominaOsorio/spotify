@@ -34,8 +34,8 @@ const Home = () => {
 
         <div className='grid gap-6 grid-cols-5'>
 
-          {songs.map(song => {
-            return <Card key={song.id} song={song} />
+          {songs.map((song, i) => {
+            return <Card key={song.id} idx={i} song={song} />
           })}
 
         </div>
