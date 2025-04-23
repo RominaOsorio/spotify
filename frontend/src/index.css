@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+  --secondary_bg: #121212;
+  --tertiary_bg: #242424;
+  --card_bg: #303030;
+  --card_sec_bg: #1212125e;
+}
+
+.secondary_bg {
+  background: var(--secondary_bg);
+}
+
+.tertiary_bg {
+  background: var(--tertiary_bg);
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
+}
