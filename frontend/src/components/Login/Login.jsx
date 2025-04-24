@@ -1,7 +1,35 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './login.css'
 
 const Login = () => {
+  const [userDetails, setUserDetails] = useState({
+    username: '',
+    password: ''
+  })
+
+  const loginUser = async (e) => {
+    e.preventDefault()
+    const { password, username } = userDetails
+    const d = JSON.stringify({
+      password,
+      username
+    })
+    console.log(d)
+    const res = await fetch('http://localhost:3000/api/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: d
+    })
+    const data = await res.json()
+    console.log(data)
+  }
+
+  const onChange = (e) => {
+    setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
+  }
   return (
     <>
       <header className=''>
@@ -22,15 +50,18 @@ const Login = () => {
 
           <div className='border-b border-gray-400 my-4 w-3/4 mx-auto' />
 
-          <form className='text-center mx-auto w-1/2'>
+          <form onSubmit={loginUser} className='text-center mx-auto w-1/2'>
 
             <div className='w-full text-left py-4'>
 
-              <label htmlFor='email' className='font-semibold mb-2 inline-block'>Email o nombre de usuario</label>
+              <label htmlFor='username' className='font-semibold mb-2 inline-block'>Email o nombre de usuario</label>
               <input
-                type='email'
-                id='email'
-                name='email'
+                type='text'
+                id='username'
+                name='username'
+                value={userDetails.username}
+                onChange={onChange}
+                autoComplete='username'
                 placeholder='Email o nombre de usuario'
                 className='block w-full rounded-[4px] border-0 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
                focus:ring-[3px] p-3 focus:ring-inset focus:ring-white-600 outline-none hover:ring-white bg-[#1a1919]'
@@ -45,7 +76,10 @@ const Login = () => {
                 type='password'
                 id='password'
                 name='password'
+                value={userDetails.password}
+                onChange={onChange}
                 placeholder='Contraseña'
+                autoComplete='current-password'
                 className='block w-full rounded-[4px] border-0 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400
                focus:ring-[3px] p-3 focus:ring-inset focus:ring-white-600 outline-none hover:ring-white bg-[#1a1919]'
               />

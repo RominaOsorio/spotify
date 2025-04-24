@@ -1,8 +1,64 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import './signup.css'
+
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
 const Signup = () => {
+  const [userDetails, setUserDetails] = useState({
+    email: '',
+    username: '',
+    day: '',
+    year: '',
+    month: '',
+    password: '',
+    gender: ''
+  })
+
+  const registerUser = async (e) => {
+    e.preventDefault()
+    const index = months.indexOf(userDetails.month) + 1
+    const formattedMonth = index.toString().padStart(2, '0')
+    const formattedDay = userDetails.day.toString().padStart(2, '0')
+    const DOB = new Date(`${userDetails.year}-${formattedMonth}-${formattedDay}`)
+    const { email, password, gender, username } = userDetails
+    const userData = JSON.stringify({
+      email,
+      password,
+      gender,
+      DOB,
+      username
+    })
+    console.log(userData)
+    const res = await fetch('http://localhost:3000/api/user/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: userData
+    })
+    const data = await res.json()
+    console.log(data)
+  }
+
+  const onChange = (e) => {
+    setUserDetails({
+      ...userDetails,
+      [e.target.name]: e.target.value
+    })
+    if (e.target.name === 'gender') {
+      if (e.target.id === 'hombre') {
+        setUserDetails({ ...userDetails, gender: 'Hombre' })
+      }
+      if (e.target.id === 'mujer') {
+        setUserDetails({ ...userDetails, gender: 'Mujer' })
+      }
+      if (e.target.id === 'no-decir') {
+        setUserDetails({ ...userDetails, gender: 'Prefiero no decirlo' })
+      }
+    }
+  }
+
   return (
     <>
       <div className='signup_container py-4'>
@@ -23,17 +79,20 @@ const Signup = () => {
             <span className='or__'>o</span>
             <p className='my-4 font-bold'>Regístrate con tu correo electrónico</p>
 
-            <form className='text-center mx-auto w-3/4'>
+            <form onSubmit={registerUser} className='text-center mx-auto w-3/4'>
 
               <div className='w-4/5 mx-auto text-left py-4'>
                 <label htmlFor='email' className='font-semibold mb-2 text-sm inline-block'>
                   Correo electrónico o nombre de usuario
                 </label>
                 <input
-                  type='email'
+                  type='text'
                   id='email'
                   name='email'
+                  value={userDetails.email}
+                  onChange={onChange}
                   placeholder='Correo o usuario'
+                  autoComplete='email'
                   className='block w-full rounded-[4px] border-0 text-black transition-all duration-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[2px] p-3 focus:ring-inset focus:ring-white-600 outline-none hover:ring-black bg-[#fff]'
                 />
               </div>
@@ -46,20 +105,26 @@ const Signup = () => {
                   type='password'
                   id='password'
                   name='password'
+                  value={userDetails.password}
+                  onChange={onChange}
                   placeholder='Crea una contraseña'
+                  autoComplete='new-password'
                   className='block w-full rounded-[4px] border-0 text-black transition-all duration-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[2px] p-3 focus:ring-inset focus:ring-white-600 outline-none hover:ring-black bg-[#fff]'
                 />
               </div>
 
               <div className='w-4/5 mx-auto text-left py-4'>
-                <label htmlFor='name' className='font-semibold mb-2 text-sm inline-block'>
+                <label htmlFor='username' className='font-semibold mb-2 text-sm inline-block'>
                   ¿Cómo quieres que te llamemos?
                 </label>
                 <input
                   type='text'
-                  id='name'
-                  name='name'
+                  id='username'
+                  name='username'
+                  value={userDetails.username}
+                  onChange={onChange}
                   placeholder='Tu nombre de perfil'
+                  autoComplete='username'
                   className='block w-full rounded-[4px] border-0 text-black transition-all duration-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[2px] p-3 focus:ring-inset focus:ring-white-600 outline-none hover:ring-black bg-[#fff]'
                 />
                 <small>Aparecerá en tu perfil</small>
@@ -77,23 +142,27 @@ const Signup = () => {
                     >Día
                     </label>
                     <input
-                      type='text' id='day'
+                      type='text'
+                      id='day'
                       name='day'
+                      value={userDetails.day}
+                      onChange={onChange}
                       placeholder='Día'
                       className='block w-full rounded-[4px] border-0 text-black transition-all duration-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-white-600 outline-none p-3 hover:ring-black bg-[#fff]'
-
                     />
                   </div>
 
                   <div className='w-2/4'>
                     <label
                       htmlFor='month'
-                      lassName='ml-2 inline-block'
+                      className='ml-2 inline-block'
                     >Mes
                     </label>
                     <select
                       id='month'
                       name='month'
+                      value={userDetails.month}
+                      onChange={onChange}
                       className='block w-full rounded-[4px] border-0 text-black transition-all duration-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-white-600 outline-none p-3 hover:ring-black bg-[#fff]'
                     >
                       {months.map((m) => {
@@ -106,7 +175,7 @@ const Signup = () => {
                   <div className='w-1/4'>
                     <label
                       htmlFor='year'
-                      lassName='ml-2 inline-block'
+                      className='ml-2 inline-block'
                     >
                       Año
                     </label>
@@ -114,6 +183,8 @@ const Signup = () => {
                       type='text'
                       id='year'
                       name='year'
+                      value={userDetails.year}
+                      onChange={onChange}
                       placeholder='Año'
                       className='block w-full rounded-[4px] border-0 text-black transition-all duration-200 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-white-600 outline-none p-3 hover:ring-black bg-[#fff]'
                     />
@@ -122,7 +193,7 @@ const Signup = () => {
               </div>
 
               <div className='w-4/5 mx-auto text-left py-4'>
-                <label className='font-semibold mb-2 text-sm inline-block'>
+                <label htmlFor='gender' className='font-semibold mb-2 text-sm inline-block'>
                   Género
                 </label>
 
@@ -130,10 +201,13 @@ const Signup = () => {
                   <div className='w-1/4'>
                     <input
                       type='radio'
+                      id='hombre'
                       name='gender'
-                      value='hombre'
-                      className=''
+                      value='Hombre'
+                      checked={userDetails.gender === 'Hombre'}
+                      onChange={onChange}
                     />
+
                     <label className='ml-2 inline-block'>
                       Hombre
                     </label>
@@ -142,10 +216,13 @@ const Signup = () => {
                   <div className='w-1/4'>
                     <input
                       type='radio'
+                      id='mujer'
                       name='gender'
-                      value='mujer'
-                      className=''
+                      value='Mujer'
+                      checked={userDetails.gender === 'Mujer'}
+                      onChange={onChange}
                     />
+
                     <label className='ml-2 inline-block'>
                       Mujer
                     </label>
@@ -154,10 +231,13 @@ const Signup = () => {
                   <div className='w-2/4'>
                     <input
                       type='radio'
+                      id='no-decir'
                       name='gender'
-                      value='no_decir'
-                      className=''
+                      value='no-decir'
+                      checked={userDetails.gender === 'Prefiero no decirlo'}
+                      onChange={onChange}
                     />
+
                     <label className='ml-2 inline-block'>
                       Prefiero no decirlo
                     </label>
@@ -169,13 +249,19 @@ const Signup = () => {
               <div className='w-4/5 mx-auto text-left py-4'>
 
                 <div className='my-4 flex items-center'>
-                  <input type='checkbox' className='green-checkbox relative' />
+                  <input
+                    type='checkbox'
+                    className='green-checkbox relative'
+                  />
                   <p className='ml-2 text-sm'>Prefiero no recibir mensajes de marketing de Spotify</p>
 
                 </div>
 
                 <div className='my-4 flex items-center'>
-                  <input type='checkbox' className='green-checkbox relative' />
+                  <input
+                    type='checkbox'
+                    className='green-checkbox relative'
+                  />
 
                   <p className='ml-2 text-sm'>Compartir mis datos de registro con los proveedores de contenido de Spotify con fines de marketing</p>
 
