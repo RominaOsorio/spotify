@@ -1,5 +1,7 @@
+/* eslint-disable prefer-const */
 const express = require('express')
 const User = require('../models/user.model')
+const { generateToken } = require('../helpers/generateToken')
 const router = express.Router()
 
 // Login de usuario
@@ -21,9 +23,15 @@ router.post('/login', async (req, res) => {
 
     if (user.password !== password) {
       return res.status(401).json({ success: false, message: 'Credenciales inválidas' })
+    } else {
+      let token = generateToken(user._id)
+      return res.status(200).json({
+        success: true,
+        message: 'Inicio de sesión exitoso',
+        token,
+        user
+      })
     }
-
-    return res.status(200).json({ success: true, message: 'Inicio de sesión exitoso' })
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message })
   }
@@ -37,7 +45,9 @@ router.post('/register', async (req, res) => {
   try {
     const user = await User.create({ email, username, password, DOB, gender })
     if (user) {
-      return res.status(201).json({ success: true, message: 'Usuario creado exitosamente' })
+      let token = generateToken(user._id)
+      console.log(token)
+      return res.status(201).json({ success: true, message: 'Usuario creado exitosamente', user, token })
     } else {
       return res.status(400).json({ success: false, message: 'Ocurrió un error al crear la cuenta' })
     }
