@@ -1,6 +1,8 @@
+/* eslint-disable no-undef */
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import './signup.css'
+import { toast } from 'react-toastify'
 
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
@@ -38,6 +40,39 @@ const Signup = () => {
       body: userData
     })
     const data = await res.json()
+    if (data.success) {
+      setUserDetails({
+        email: '',
+        username: '',
+        day: '',
+        year: '',
+        month: '',
+        password: '',
+        gender: ''
+      })
+      toast.success(data.message, {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+      })
+      localStorage.setItem('token', data.token)
+    } else {
+      toast.error(data.message, {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+      })
+    }
     console.log(data)
   }
 

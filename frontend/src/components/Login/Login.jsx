@@ -1,6 +1,8 @@
+/* eslint-disable no-undef */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './login.css'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({
@@ -11,19 +13,43 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault()
     const { password, username } = userDetails
-    const d = JSON.stringify({
+    const userData = JSON.stringify({
       password,
       username
     })
-    console.log(d)
+    console.log(userData)
     const res = await fetch('http://localhost:3000/api/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: d
+      body: userData
     })
     const data = await res.json()
+    if (data.success) {
+      toast.success(data.message, {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+      })
+      localStorage.setItem('token', data.token)
+    } else {
+      toast.error(data.message, {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+      })
+    }
     console.log(data)
   }
 

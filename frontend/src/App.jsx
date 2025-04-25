@@ -5,6 +5,8 @@ import Signup from './components/Signup.jsx/Signup'
 import { Provider } from 'react-redux'
 import store from './states/store'
 import { AppProvider } from './states/Context'
+import { ToastContainer, Bounce } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   return (
@@ -17,6 +19,21 @@ const App = () => {
             <Route path='/signup' element={<Signup />} />
           </Routes>
         </Router>
+
+        <ToastContainer
+          position='bottom-right'
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='dark'
+          transition={Bounce}
+        />
+
       </AppProvider>
     </Provider>
   )
