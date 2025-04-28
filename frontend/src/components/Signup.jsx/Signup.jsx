@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import './signup.css'
 import { toast } from 'react-toastify'
@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
 const Signup = () => {
+  const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState({
     email: '',
     username: '',
@@ -50,28 +51,11 @@ const Signup = () => {
         password: '',
         gender: ''
       })
-      toast.success(data.message, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      })
+      toast.success(data.message)
       localStorage.setItem('token', data.token)
+      navigate('/login')
     } else {
-      toast.error(data.message, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      })
+      toast.error(data.message)
     }
     console.log(data)
   }
@@ -98,12 +82,15 @@ const Signup = () => {
     <>
       <div className='signup_container py-4'>
         <div className='logo'>
-          <img
-            src='/assets/logos/black_logo.svg'
-            width={200}
-            alt='Logo de Spotify'
-            className='mx-auto transition-all duration-300 hover:scale-105'
-          />
+          <Link to='/'>
+
+            <img
+              src='/assets/logos/black_logo.svg'
+              width={200}
+              alt='Logo de Spotify'
+              className='mx-auto transition-all duration-300 hover:scale-105'
+            />
+          </Link>
         </div>
 
         <div className='text-black'>

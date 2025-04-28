@@ -1,14 +1,19 @@
 /* eslint-disable no-undef */
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './login.css'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { userActor } from '../../states/Actors/UserActor'
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const { isAuthenticated } = useSelector((state) => state.account)
   const [userDetails, setUserDetails] = useState({
     username: '',
     password: ''
   })
+  const navigate = useNavigate()
 
   const loginUser = async (e) => {
     e.preventDefault()
@@ -27,28 +32,12 @@ const Login = () => {
     })
     const data = await res.json()
     if (data.success) {
-      toast.success(data.message, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      })
+      toast.success(data.message)
       localStorage.setItem('token', data.token)
+      dispatch(userActor(data.user))
+      navigate('/')
     } else {
-      toast.error(data.message, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark'
-      })
+      toast.error(data.message)
     }
     console.log(data)
   }
@@ -56,16 +45,25 @@ const Login = () => {
   const onChange = (e) => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value })
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated, navigate])
+
   return (
     <>
       <header className=''>
         <div className='logo'>
-          <img
-            src='/assets/logos/green_logo.svg'
-            width={150}
-            alt='logo'
-            className='transition-all duration-300 hover:scale-105'
-          />
+          <Link to='/'>
+            <img
+              src='/assets/logos/green_logo.svg'
+              width={150}
+              alt='logo'
+              className='transition-all duration-300 hover:scale-105'
+            />
+          </Link>
 
         </div>
       </header>

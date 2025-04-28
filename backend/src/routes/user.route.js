@@ -24,7 +24,8 @@ router.post('/login', async (req, res) => {
     if (user.password !== password) {
       return res.status(401).json({ success: false, message: 'Credenciales inválidas' })
     } else {
-      let token = generateToken(user._id)
+      let token = await generateToken(user._id)
+      console.log(token, user)
       return res.status(200).json({
         success: true,
         message: 'Inicio de sesión exitoso',
@@ -42,10 +43,23 @@ router.post('/register', async (req, res) => {
   console.log(req.body)
   const { email, username, password, DOB, gender } = req.body
 
+  if (!email || !username || !password || !DOB || !gender) {
+    return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios' })
+  }
+
   try {
-    const user = await User.create({ email, username, password, DOB, gender })
+    const user = await User.create({
+      email,
+      username,
+      password,
+      DOB,
+      gender
+    })
+
+    console.log(user)
+
     if (user) {
-      let token = generateToken(user._id)
+      let token = await generateToken(user._id)
       console.log(token)
       return res.status(201).json({ success: true, message: 'Usuario creado exitosamente', user, token })
     } else {
