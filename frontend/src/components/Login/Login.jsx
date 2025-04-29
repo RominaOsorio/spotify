@@ -8,7 +8,7 @@ import { userActor } from '../../states/Actors/UserActor'
 
 const Login = () => {
   const dispatch = useDispatch()
-  const { isAuthenticated } = useSelector((state) => state.account)
+  const { user, isAuthenticated } = useSelector((state) => state.account)
   const [userDetails, setUserDetails] = useState({
     username: '',
     password: ''

@@ -1,13 +1,15 @@
 /* eslint-disable no-undef */
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './signup.css'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
 const Signup = () => {
   const navigate = useNavigate()
+  const { isAuthenticated } = useSelector((state) => state.account)
   const [userDetails, setUserDetails] = useState({
     email: '',
     username: '',
@@ -54,6 +56,7 @@ const Signup = () => {
       toast.success(data.message)
       localStorage.setItem('token', data.token)
       navigate('/login')
+      localStorage.setItem('token', JSON.stringify(token))
     } else {
       toast.error(data.message)
     }
@@ -77,6 +80,12 @@ const Signup = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated, navigate])
 
   return (
     <>

@@ -40,12 +40,12 @@ export const songs = [
     artist: 'Crab Audio',
     mp3: new Audio('/assets/mp3/sea-sun-and-beach.mp3'),
     cover: '/assets/covers/img.jpg'
-  },
-  {
-    id: crypto.randomUUID(),
-    title: 'Calm at sea',
-    artist: 'Folk Acoustic',
-    mp3: new Audio('/assets/mp3/calm-at-sea.mp3'),
-    cover: '/assets/covers/img.jpg'
   }
+  // {
+  //   id: crypto.randomUUID(),
+  //   title: 'Calm at sea',
+  //   artist: 'Folk Acoustic',
+  //   mp3: new Audio('/assets/mp3/calm-at-sea.mp3'),
+  //   cover: '/assets/covers/img.jpg'
+  // }
 ]
