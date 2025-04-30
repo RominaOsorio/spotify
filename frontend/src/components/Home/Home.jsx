@@ -6,6 +6,7 @@ import SongBar from '../MasterBar/SongBar'
 import { useEffect } from 'react'
 import Navbar from '../Navbar/Navbar'
 import { useGlobalContext } from '../../states/Context'
+import Footer from '../Footer/Footer'
 
 const Home = () => {
   const { getUser } = useGlobalContext()
@@ -46,8 +47,8 @@ const Home = () => {
 
           </div>
 
+          <Footer />
         </div>
-
         <SongBar />
       </Layout>
     </>
