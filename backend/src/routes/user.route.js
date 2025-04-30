@@ -4,6 +4,7 @@ const router = express.Router()
 const User = require('../models/user.model')
 const { generateToken } = require('../helpers/generateToken')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 require('dotenv').config()
 
 // Login de usuario
@@ -21,19 +22,21 @@ router.post('/login', async (req, res) => {
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Credenciales inválidas' })
-    }
-
-    if (user.password !== password) {
-      return res.status(401).json({ success: false, message: 'Credenciales inválidas' })
     } else {
-      let token = await generateToken(user._id)
-      console.log(token, user)
-      return res.status(200).json({
-        success: true,
-        message: 'Inicio de sesión exitoso',
-        token,
-        user
-      })
+      const verify = await bcrypt.compare(password, user.password)
+
+      if (!verify) {
+        return res.status(401).json({ success: false, message: 'Credenciales inválidas' })
+      } else {
+        let token = await generateToken(user._id)
+        console.log(token, user)
+        return res.status(200).json({
+          success: true,
+          message: 'Inicio de sesión exitoso',
+          token,
+          user
+        })
+      }
     }
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message })
@@ -50,10 +53,11 @@ router.post('/register', async (req, res) => {
   }
 
   try {
+    const hash = await bcrypt.hash(password, 10)
     const user = await User.create({
       email,
       username,
-      password,
+      password: hash,
       DOB,
       gender
     })
@@ -98,7 +102,7 @@ router.get('/me', async (req, res) => {
       return res.status(404).json({ success: false, message: 'Usuario no encontrado' })
     }
   } catch (error) {
-    return res.status(500).json({ success: false, message: 'Error al obtener el usuario' })
+    return res.status(401).json({ success: false, message: 'La sesión ha expirado ingresa nuevamente' })
   }
 })
 
