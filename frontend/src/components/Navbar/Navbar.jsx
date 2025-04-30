@@ -2,11 +2,33 @@ import { GoChevronLeft, GoChevronRight } from 'react-icons/go'
 import { FaSearch, FaUser } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { songs } from '../../data/songs'
+import { useGlobalContext } from '../../states/Context'
 
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.account)
+
   const location = useLocation()
+  const [query, setQuery] = useState('')
+  const { setfilteredSongs } = useGlobalContext()
+
+  const filterSongs = (e) => {
+    const value = e.target.value
+    setQuery(value)
+
+    if (value === '') {
+      setfilteredSongs([])
+      return
+    }
+
+    const filtered = songs.filter((song) =>
+      song.title.toLowerCase().includes(value.toLowerCase()) ||
+      song.artist.toLowerCase().includes(value.toLowerCase())
+    )
+
+    setfilteredSongs(filtered)
+  }
 
   useEffect(() => {
     // console.log(location.pathname)
@@ -24,13 +46,14 @@ const Navbar = () => {
               type='text'
               id='username'
               name='username'
-              autoComplete='username'
               placeholder='¿Qué quieres escuchar?'
+              autoComplete='off'
+              value={query}
+              onChange={filterSongs}
               className={`block ${location.pathname !== '/search' ? 'opacity-0' : ''} w-full rounded-full pl-12 border-0 text-gray-300 shadow-sm ring-1 ring-inset ring-transparent placeholder:text-gray-400 focus:ring-[3px] p-3 focus:ring-inset focus:ring-white outline-none hover:ring-white/20 bg-[#1a1919]`}
             />
             <FaSearch className='absolute top-8 left-4 text-gray-400' />
           </div>
-
         </div>
 
         <div>
@@ -52,7 +75,9 @@ const Navbar = () => {
                 </Link>
               </div>
               )
-            : (<FaUser className='bg-white/10 text-4xl p-1 rounded-[50%]' />)}
+            : (
+              <FaUser className='bg-white/10 text-4xl p-1 rounded-[50%]' />
+              )}
         </div>
       </header>
     </>

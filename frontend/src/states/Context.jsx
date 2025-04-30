@@ -11,6 +11,7 @@ export const AppProvider = ({ children }) => {
   const [duration, setDuration] = useState('00:00')
   const [progress, setProgress] = useState(0)
   const [songIdx, setSongIdx] = useState(0)
+  const [filteredSongs, setfilteredSongs] = useState([])
   const dispatch = useDispatch()
   const resetEverything = () => {
     setProgress(0)
@@ -49,7 +50,9 @@ export const AppProvider = ({ children }) => {
         songIdx,
         setSongIdx,
         resetEverything,
-        getUser
+        getUser,
+        filteredSongs,
+        setfilteredSongs
       }}
     >
       {children}

@@ -1,4 +1,9 @@
-import { PLAY_SONG_REQUEST, PAUSE_SONG_REQUEST, PLAY_MASTER, PAUSE_MASTER } from '../Constants/SongConstant'
+import {
+  PLAY_SONG_REQUEST,
+  PAUSE_SONG_REQUEST,
+  PLAY_MASTER,
+  PAUSE_MASTER
+} from '../Constants/SongConstant'
 
 export const playSong = (song) => async (dispatch) => {
   dispatch({ type: PLAY_SONG_REQUEST, payload: song })
