@@ -1,8 +1,43 @@
-header{
-    background-color: #000000;
-}
+   header {
+    background-color: transparent;
+    padding: 20px;
+  }
 
-.container{
-    background-color: #1a1919;
-    min-height: 100vh;
-}
+  .login-box {
+    background-color: #121212;
+    padding: 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  }
+
+  .login-box input {
+    background-color: #242424;
+    color: #fff;
+    border: none;
+  }
+
+  .login-box input:focus {
+    outline: none;
+    border: 1px solid var(--primary_green);
+  }
+
+  .login-box button {
+    background-color: var(--primary_green);
+    color: #000;
+    font-weight: bold;
+  }
+
+  .login-box button:hover {
+    transform: scale(1.03);
+    background-color: #1fdf64;
+  }
+
+  .login-page a {
+    color: var(--primary_green);
+  }
+
+  .login-page a:hover {
+    text-decoration: underline;
+  }

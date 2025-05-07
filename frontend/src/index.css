@@ -1,10 +1,18 @@
-@import "tailwindcss";
+ @import "tailwindcss";
 
 :root {
+  --primary_green: #1ed760;
   --secondary_bg: #121212;
   --tertiary_bg: #242424;
   --card_bg: #303030;
   --card_sec_bg: #1212125e;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
 }
 
 .secondary_bg {
@@ -15,46 +23,27 @@
   background: var(--tertiary_bg);
 }
 
-body {
-  background-color: #000000;
-  color: #ffffff;
-  scroll-behavior: smooth;
-  font-family: "Poppins", sans-serif;
+a{
+  color: white;
 }
-
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background-color: #555;
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
-
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
 * {
   scrollbar-width: thin;
   scrollbar-color: #555 transparent;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #888;
-}
-
-::-ms-scrollbar {
-  width: 8px;
-}
-::-ms-scrollbar-track {
-  background: transparent;
-}
-::-ms-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 10px;
-}
-

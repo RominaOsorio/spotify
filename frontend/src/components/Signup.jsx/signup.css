@@ -86,3 +86,13 @@ input[type='radio']:checked::before {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.signup_container a{
+    color: var(--primary_green);
+    min-height: 100vh;
+    padding-left: 0.5rem;
+}
+
+  .signup_container a:hover {
+    text-decoration: underline;
+  }
