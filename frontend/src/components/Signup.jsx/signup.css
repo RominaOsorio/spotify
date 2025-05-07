@@ -1,98 +1,62 @@
-.signup_container{
-    background-color: #ffffff;
-    min-height: 100vh;
-    padding: 0 4rem;
-}
+  input,
+  select,
+  button {
+    transition: all 0.2s ease-in-out;
+  }
 
-.or__{
-    color: gray;
-    font-size: 1.2rem;
-    position: relative;
-}
-
-.or__::before{
-    content: '';
-    position: absolute;
-    width: 10rem;
-    left: -11rem;
-    border-bottom: 1px solid gray;
-    bottom: 10px;
-}
-
-.or__::after{
-    content: '';
-    position: absolute;
-    width: 10rem;
-    right: -11rem;
-    border-bottom: 1px solid gray;
-    bottom: 10px;
-}
-
-input[type='radio'] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    display: inline-block;
-    position: relative;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid #e1e1e1;
-    transition: border-color 0.3s ease-in-out;
-}
-
-input[type='radio']:checked {
-    border-color: green;
-}
-
-input[type='radio']:checked::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: white;
-}
-
-
-.green-checkbox {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #34a853;
-    border-radius: 4px;
+  input:focus,
+  select:focus {
     outline: none;
-    transition: all 0.3s ease-in-out;
-}
+    box-shadow: 0 0 0 2px #1db954;
+    background-color: #1a1a1a;
+  }
 
-.green-checkbox:checked {
-    background-color: #34a853;
-}
+  button[type="submit"] {
+    background-color: #1db954;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    padding: 12px 24px;
+    font-size: 16px;
+  }
 
-.green-checkbox:checked::before {
-    content: '\2713';
-    font-size: 14px;
-    color: #fff;
-    position: absolute;
-    top: 2px;
-    left: 6px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+  button[type="submit"]:hover {
+    background-color: #1ed760;
+    transform: scale(1.03);
+  }
 
-.signup_container a{
-    color: var(--primary_green);
-    min-height: 100vh;
-    padding-left: 0.5rem;
-}
+  input[type="checkbox"] {
+    accent-color: #1db954;
+  }
 
-  .signup_container a:hover {
+  a,
+  input,
+  select,
+  label {
+    transition: 0.2s ease;
+  }
+
+  a {
+    color: #1db954;
+    text-decoration: none;
+  }
+
+  a:hover {
     text-decoration: underline;
+  }
+
+  hr,
+  .border-t {
+    border-color: #333;
+  }
+
+  ::placeholder {
+    color: #aaa;
+  }
+
+  label {
+    font-size: 14px;
+    color: #ccc;
   }
